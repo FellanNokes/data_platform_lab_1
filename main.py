@@ -5,10 +5,10 @@ import pandas as pd
 def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
-    # --- PRICE: safe numeric conversion
+    # PRICE: safe numeric conversion
     df["price"] = pd.to_numeric(df["price"].astype("string").str.strip(), errors="coerce")
 
-    # --- NAME: normalize whitespace + title case
+    # NAME: normalize whitespace + title case
     df["name"] = (
         df["name"]
         .astype("string")
@@ -17,17 +17,22 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         .str.title()
     )
 
-    # --- CURRENCY: strip + uppercase, keep missing as <NA>
+    # CURRENCY: strip + uppercase, keep missing as <NA>
     df["currency"] = (
         df["currency"]
         .astype("string")
         .str.strip()
         .str.upper()
     )
+
+    # CREATED_AT: date conversion and correct formating
     df["created_at"] = (
-        pd.to_datetime(df["created_at"], errors="coerce")
-        .dt.strftime("%Y-%m-%d")
+        df["created_at"]
+        .astype("string")
+        .str.strip()
+        .str.replace("/", "-", regex=False)
     )
+    df["created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
 
     return df
 
