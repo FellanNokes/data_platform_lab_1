@@ -44,16 +44,36 @@ print(products_df)
 cleaned_products_df = clean_dataframe(products_df)
 print(cleaned_products_df)
 
-reject_condition = (
-    cleaned_products_df["id"].isna() |
-    cleaned_products_df["name"].isna() |
-    cleaned_products_df["currency"].isna() |
-    cleaned_products_df["created_at"].isna() |
-    cleaned_products_df["price"].isna() | (cleaned_products_df["price"] <= 0)
+##########################
+##### REJECTING DATA #####
+##########################
+
+df = cleaned_products_df.copy()
+
+# Defining reject rules
+reject_rules = {
+    "missing_id": df["id"].isna(),
+    "missing_name": df["name"].isna(),
+    "missing_currency": df["currency"].isna(),
+    "missing_created_at": df["created_at"].isna(),
+    "missing_price": df["price"].isna(),
+    "non_positive_price": df["price"] <= 0,
+}
+
+# Creating a dataframe with rules
+rules_df = pd.DataFrame(reject_rules)
+
+# A row will be rejected if any rules are True
+reject_condition = rules_df.any(axis=1)
+
+df_rejected = df[reject_condition].copy()
+df_accepted = df[~reject_condition].copy()
+
+# Created a colum with the reason(s) for rejection
+df_rejected["reject_reason"] = (
+    rules_df[reject_condition]
+    .apply(lambda row: ",".join(row.index[row.values]), axis=1)
 )
-
-df_rejected = cleaned_products_df[reject_condition].copy()
-df_accepted = cleaned_products_df[~reject_condition].copy()
-
-print(df_accepted)
 print(df_rejected)
+
+
