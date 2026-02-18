@@ -1,0 +1,4 @@
+id,name,price,currency,created_at,status,reason,decision,comment,reviewed_by,reviewed_at
+SKU-1014,T-Shirt,0,SEK,2024-04-10,review,price_is_zero,,,,
+SKU-1039,Coat,999999,SEK,2024-10-15,review,very_high_price,,,,
+SKU-1054,,450,SEK,2025-02-01,review,missing_name,,,,

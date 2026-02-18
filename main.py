@@ -124,6 +124,39 @@ def build_analytics_summary(df: pd.DataFrame) -> pd.DataFrame:
 
     return summary
 
+def build_price_analytics_summary(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+
+    # Remove NaN
+    df = df[df["price"].notna()]
+
+    # Top 10 epensive
+    top_10_expensive = (
+        df.sort_values("price", ascending=False)
+        .head(10)
+        [["id", "name", "price"]]
+        .assign(category="top_10_expensive")
+    )
+
+    # Z-score
+    mean_price = df["price"].mean()
+    std_price = df["price"].std()
+
+    df["z_score"] = (df["price"] - mean_price) / std_price
+    df["abs_z"] = df["z_score"].abs()
+
+    top_10_outliers = (
+        df.sort_values("abs_z", ascending=False)
+        .head(10)
+        [["id", "name", "price", "z_score"]]
+        .assign(category="top_10_outliers")
+    )
+
+    # Combine the two
+    price_analysis = pd.concat([top_10_expensive, top_10_outliers])
+
+    return price_analysis
+
 
 
 products_df = pd.read_csv("Data/products_raw.csv", sep=";")
@@ -135,11 +168,14 @@ print(cleaned_products_df)
 
 accepted_df, review_df, rejected_df, report = validate_products(cleaned_products_df)
 
-print(accepted_df)
-print(review_df)
-print(rejected_df)
-print(report)
+
 analytics_summary = build_analytics_summary(accepted_df)
+price_analysis = build_price_analytics_summary(accepted_df)
 
 analytics_summary.to_csv("Data/analytics_summary.csv", index=False)
+price_analysis.to_csv("Data/price_analysis.csv", index=False)
+rejected_df.to_csv("Data/rejected_products.csv", index=False)
+review_df.to_csv("Data/review_df.csv", index=False)
+
 print(analytics_summary)
+print(price_analysis)

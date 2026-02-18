@@ -1,0 +1,21 @@
+id,name,price,category,z_score
+SKU-1021,Ring,25000,top_10_expensive,
+SKU-1020,Watch,15000,top_10_expensive,
+SKU-1032,Suit,5000,top_10_expensive,
+SKU-1040,Parka,4500,top_10_expensive,
+SKU-1027,Winter Jacket,3500,top_10_expensive,
+SKU-1016,Coat,2500,top_10_expensive,
+SKU-1034,Blazer,2200,top_10_expensive,
+SKU-1047,Heels,1500,top_10_expensive,
+SKU-1010,Boots,1500,top_10_expensive,
+SKU-1018,Sneakers,1200,top_10_expensive,
+SKU-1021,Ring,25000,top_10_outliers,5.267864960222961
+SKU-1020,Watch,15000,top_10_outliers,2.991491181444347
+SKU-1032,Suit,5000,top_10_outliers,0.7151174026657331
+SKU-1040,Parka,4500,top_10_outliers,0.6012987137268023
+SKU-1013,Cap,75,top_10_outliers,-0.40599668338273437
+SKU-1053,Cap,85,top_10_outliers,-0.4037203096039558
+SKU-1009,Socks,99,top_10_outliers,-0.4005333863136657
+SKU-1048,Flipflops,100,top_10_outliers,-0.40030574893578785
+SKU-1042,Earmuffs,130,top_10_outliers,-0.393476627599452
+SKU-1033,Tie,150,top_10_outliers,-0.38892388004189477
