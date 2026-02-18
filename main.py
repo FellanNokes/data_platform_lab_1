@@ -38,7 +38,7 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 def validate_products(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """
-    Returns:
+    :returns:
         accepted_df: accepted products dataframe
         review_df: flagged products dataframe
         reject_df: rejected products dataframe
@@ -106,6 +106,23 @@ def validate_products(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.
 
     return accepted_df, review_df, rejected_df, report
 
+def build_analytics_summary(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+
+    total_products = len(df)
+    missing_price_count = df["price"].isna().sum()
+
+    avg_price = df["price"].mean()
+    median_price =df["price"].median()
+
+    summary = pd.DataFrame({
+        "avg_price": [round(avg_price, 2)],
+        "median_price": [round(median_price, 2)],
+        "total_products": [total_products],
+        "missing_price_count": [missing_price_count],
+    })
+
+    return summary
 
 
 
@@ -122,3 +139,7 @@ print(accepted_df)
 print(review_df)
 print(rejected_df)
 print(report)
+analytics_summary = build_analytics_summary(accepted_df)
+
+analytics_summary.to_csv("Data/analytics_summary.csv", index=False)
+print(analytics_summary)
