@@ -112,6 +112,7 @@ def build_analytics_summary(df: pd.DataFrame) -> pd.DataFrame:
     total_products = len(df)
     missing_price_count = df["price"].isna().sum()
 
+    # avg and median
     avg_price = df["price"].mean()
     median_price =df["price"].median()
 
@@ -130,7 +131,7 @@ def build_price_analytics_summary(df: pd.DataFrame) -> pd.DataFrame:
     # Remove NaN
     df = df[df["price"].notna()]
 
-    # Top 10 epensive
+    # Top 10 expensive
     top_10_expensive = (
         df.sort_values("price", ascending=False)
         .head(10)
@@ -145,6 +146,7 @@ def build_price_analytics_summary(df: pd.DataFrame) -> pd.DataFrame:
     df["z_score"] = (df["price"] - mean_price) / std_price
     df["abs_z"] = df["z_score"].abs()
 
+    # Top 10 outliers
     top_10_outliers = (
         df.sort_values("abs_z", ascending=False)
         .head(10)
@@ -176,6 +178,7 @@ analytics_summary.to_csv("Data/analytics_summary.csv", index=False)
 price_analysis.to_csv("Data/price_analysis.csv", index=False)
 rejected_df.to_csv("Data/rejected_products.csv", index=False)
 review_df.to_csv("Data/review_df.csv", index=False)
+report.to_csv("Data/reject_review_report.csv", index=False)
 
 print(analytics_summary)
 print(price_analysis)
