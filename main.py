@@ -6,6 +6,7 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
     # PRICE: safe numeric conversion
+    df["price"] = df["price"].astype("string").str.lower().str.replace("free", "0")
     df["price"] = pd.to_numeric(df["price"].astype("string").str.strip(), errors="coerce")
 
     # NAME: normalize whitespace + title case
@@ -163,17 +164,14 @@ def build_price_analytics_summary(df: pd.DataFrame) -> pd.DataFrame:
 
 products_df = pd.read_csv("Data/products_raw.csv", sep=";")
 
-print(products_df)
-
 cleaned_products_df = clean_dataframe(products_df)
-print(cleaned_products_df)
-
 accepted_df, review_df, rejected_df, report = validate_products(cleaned_products_df)
 
-
+analytics_summary_including_rejected = build_analytics_summary(cleaned_products_df)
 analytics_summary = build_analytics_summary(accepted_df)
 price_analysis = build_price_analytics_summary(accepted_df)
 
+analytics_summary_including_rejected.to_csv("Data/analytics_summary_including_rejected.csv", index=False)
 analytics_summary.to_csv("Data/analytics_summary.csv", index=False)
 price_analysis.to_csv("Data/price_analysis.csv", index=False)
 rejected_df.to_csv("Data/rejected_products.csv", index=False)

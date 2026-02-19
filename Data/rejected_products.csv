@@ -3,7 +3,7 @@ SKU-1003,Shirts,450,SEK,,rejected,missing_created_at
 ,Jacket,-200,SEK,,rejected,"missing_id,missing_created_at,negative_price"
 SKU-1005,,,,,rejected,"missing_created_at,missing_currency,missing_price"
 SKU-1006,Designer Coat,,SEK,2024-05-01,rejected,missing_price
-,Hat,,SEK,,rejected,"missing_id,missing_created_at,missing_price"
+,Hat,0,SEK,,rejected,"missing_id,missing_created_at"
 SKU-1008,Gloves,120,,2024-06-20,rejected,missing_currency
 SKU-1015,Hoodie,-50,SEK,2024-04-15,rejected,negative_price
 SKU-1043,Cardigan,,SEK,2024-11-15,rejected,missing_price
