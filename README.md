@@ -1,8 +1,10 @@
 # data_platform_lab_1
 Data ingestion, manipulation and workflow
 
-# How to run the app
+# Hur man kör appen
 Om man vill se ifall CSV filerna skapas deleta allt i data FÖRUTOM `products_raw.csv`
+
+I terminalen skriver man `python main.py`
 
 # Teori
 
